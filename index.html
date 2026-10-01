@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mari Belajar Preposisi: In, On, Under</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0ea5e9; /* Light blue */
+            --dark-blue: #1e3a8a;    /* Dark blue */
+            --bg-color: #f0f9ff;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --accent: #f59e0b;       /* Amber for accents/buttons */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-container {
+            display: none;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .section-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(30, 58, 138, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        .drop-zone {
+            border: 3px dashed var(--primary-blue);
+            border-radius: 12px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            background-color: #e0f2fe;
+            position: relative;
+        }
+
+        .drop-zone.hover {
+            background-color: #bae6fd;
+            border-color: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
+        .draggable-item {
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            transition: transform 0.1s;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .scene-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #e0f2fe 50%, #d1d5db 50%); /* Wall and floor */
+            border-radius: 16px;
+            overflow: hidden;
+            border: 4px solid var(--dark-blue);
+        }
+
+        .desk {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            background-color: #8b5a2b; /* Brown desk */
+            border-radius: 8px;
+            box-shadow: inset 0 -10px 0 rgba(0,0,0,0.2);
+        }
+
+        .box {
+            position: absolute;
+            bottom: 120px; /* On the desk */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background-color: #fcd34d; /* Yellow box */
+            border: 4px solid #d97706;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .box-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-color: rgba(217, 119, 6, 0.8);
+            z-index: 30; /* Front lip of the box */
+        }
+
+        .students-char {
+            position: absolute;
+            font-size: 40px;
+            line-height: 1;
+            transition: all 0.5s ease;
+            z-index: 20;
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Positions */
+        .pos-in {
+            bottom: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pos-on {
+            bottom: 195px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pos-under {
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .quiz-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            text-align: center;
+            background-color: white;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-blue);
+            background-color: #f0f9ff;
+        }
+
+        .quiz-option.selected {
+            background-color: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .quiz-option.correct {
+            background-color: #22c55e;
+            color: white;
+            border-color: #22c55e;
+        }
+
+        .quiz-option.incorrect {
+            background-color: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .feedback-bubble {
+            background-color: #fffbeb; /* Light yellow */
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            display: none;
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        
+        .header-bg {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--accent); /* Menggunakan warna kuning/amber */
+            color: #ffffff;
+            padding: 0.35rem 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 15s linear infinite;
+            padding-left: 100%;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="header-bg text-white shadow-md p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold brand-font">MI Bahasa Inggris</h1>
+                <p class="text-sm opacity-90">Fase A - Kelas II (MI Almourky)</p>
+            </div>
+            <div class="hidden sm:block">
+                <svg class="w-10 h-10 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+        </div>
+    </header>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            ✨ English class-Miss tya ✨
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow w-full max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
+        
+        <section id="sec-home" class="section-container active">
+            <div class="glass-card p-6 md:p-10 text-center">
+                <div class="mb-6 flex justify-center">
+                    <div class="w-28 h-28 bg-blue-100 rounded-full flex items-center justify-center border-4 border-blue-500 overflow-hidden shadow-md">
+                        <img src="https://iili.io/na473ZP.md.jpg" alt="Foto Miss Tya" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-blue-900 mb-4 brand-font">Welcome to English Class!</h2>
+                <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+                    Hello students! Hari ini kita akan belajar tentang <strong>Preposition of Place</strong> (Kata depan petunjuk tempat) yaitu: <span class="text-blue-600 font-bold">IN</span>, <span class="text-blue-600 font-bold">ON</span>, dan <span class="text-blue-600 font-bold">UNDER</span>.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h3 class="font-bold text-xl text-blue-800">IN</h3>
+                        <p class="text-sm">Di dalam</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h3 class="font-bold text-xl text-blue-800">ON</h3>
+                        <p class="text-sm">Di atas (menempel)</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h3 class="font-bold text-xl text-blue-800">UNDER</h3>
+                        <p class="text-sm">Di bawah</p>
+                    </div>
+                </div>
+                <button onclick="navTo('sec-explore')" class="btn-primary text-lg w-full sm:w-auto">
+                    Mulai Belajar 🚀
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-explore" class="section-container">
+            <div class="glass-card p-4 md:p-8">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-blue-900 brand-font">1. Eksplorasi (Let's Try!)</h2>
+                    <button onclick="navTo('sec-home')" class="text-gray-500 hover:text-blue-600 font-semibold text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                    </button>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <!-- Interactive Visual Scene -->
+                    <div class="w-full md:w-1/2">
+                        <div class="scene-container" id="visual-scene">
+                            <div class="desk"></div>
+                            <div class="box">
+                                <div class="box-front"></div>
+                            </div>
+                            <!-- The dynamic item -->
+                            <div class="students-char pos-in" id="scene-item">
+                                <img src="https://iili.io/na473ZP.md.jpg" alt="Miss Tya" class="w-12 h-12 rounded-full border-2 border-amber-400 object-cover shadow-md">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="w-full md:w-1/2 flex flex-col gap-4">
+                        <p class="text-lg font-medium text-gray-700">Pilih posisi murid (The student):</p>
+                        
+                        <div class="flex flex-col gap-3">
+                            <button onclick="changePosition('in')" class="btn-pos bg-white border-2 border-blue-300 text-blue-800 p-3 rounded-xl font-bold text-left hover:bg-blue-50 flex items-center justify-between" id="btn-in">
+                                <span>1. The student is <span class="text-blue-600 underline">IN</span> the box.</span>
+                                <span class="text-sm font-normal text-gray-500">(Di dalam kotak)</span>
+                            </button>
+                            <button onclick="changePosition('on')" class="btn-pos bg-white border-2 border-blue-300 text-blue-800 p-3 rounded-xl font-bold text-left hover:bg-blue-50 flex items-center justify-between" id="btn-on">
+                                <span>2. The student is <span class="text-blue-600 underline">ON</span> the box.</span>
+                                <span class="text-sm font-normal text-gray-500">(Di atas kotak)</span>
+                            </button>
+                            <button onclick="changePosition('under')" class="btn-pos bg-white border-2 border-blue-300 text-blue-800 p-3 rounded-xl font-bold text-left hover:bg-blue-50 flex items-center justify-between" id="btn-under">
+                                <span>3. The student is <span class="text-blue-600 underline">UNDER</span> the desk.</span>
+                                <span class="text-sm font-normal text-gray-500">(Di bawah meja)</span>
+                            </button>
+                        </div>
+
+                        <div id="explore-feedback" class="feedback-bubble mt-4">
+                            Pilih tombol di atas untuk melihat perubahan posisi.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="navTo('sec-dragdrop')" class="btn-primary">
+                        Lanjut ke Latihan Kosa Kata ➡️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-dragdrop" class="section-container">
+            <div class="glass-card p-4 md:p-8">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-blue-900 brand-font">2. Pasangkan Kata (Drag & Drop)</h2>
+                    <button onclick="navTo('sec-explore')" class="text-gray-500 hover:text-blue-600 font-semibold text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                    </button>
+                </div>
+
+                <p class="mb-6 text-gray-700">Tarik kotak preposisi berwarna biru ke kalimat yang kosong sesuai dengan gambar yang kamu ingat sebelumnya!</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Draggable Items -->
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col justify-center items-center gap-4">
+                        <h3 class="font-bold text-blue-800 mb-2">Pilihan Kata:</h3>
+                        <div class="flex gap-4 flex-wrap justify-center" id="drag-source">
+                            <!-- Items created via JS for easy reset -->
+                        </div>
+                        <button onclick="resetDragDrop()" class="mt-4 text-sm text-gray-500 hover:text-blue-600 underline">Ulangi</button>
+                    </div>
+
+                    <!-- Drop Zones -->
+                    <div class="flex flex-col gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                            <span class="font-medium mr-2">1. The cat is <span class="inline-block drop-zone w-24 h-10 border-2 mx-2 align-middle" data-answer="on" id="drop1"></span> the chair (di atas).</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                            <span class="font-medium mr-2">2. Two pencils are <span class="inline-block drop-zone w-24 h-10 border-2 mx-2 align-middle" data-answer="in" id="drop2"></span> the pencil case (di dalam).</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                            <span class="font-medium mr-2">3. Three books are <span class="inline-block drop-zone w-24 h-10 border-2 mx-2 align-middle" data-answer="under" id="drop3"></span> the table (di bawah).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dd-feedback" class="text-center font-bold text-lg mt-6 hidden">
+                    <!-- Feedback injected here -->
+                </div>
+
+                <div class="mt-8 flex justify-between items-center">
+                    <button onclick="checkDragDrop()" class="btn-primary bg-amber-500 hover:bg-amber-600 text-white shadow-md">
+                        Cek Jawaban
+                    </button>
+                    <button onclick="navTo('sec-quiz')" id="btn-to-quiz" class="btn-primary hidden">
+                        Mulai Kuis Evaluasi 📝
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-quiz" class="section-container">
+            <div class="glass-card p-4 md:p-8">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h2 class="text-2xl font-bold text-blue-900 brand-font">3. Kuis Evaluasi</h2>
+                    <span id="quiz-progress" class="font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full text-sm">Soal 1/5</span>
+                </div>
+
+                <!-- Identity Form -->
+                <div id="identity-content" class="max-w-md mx-auto py-8">
+                    <h3 class="text-xl font-bold text-blue-900 mb-4 text-center">Isi Identitas Diri Sebelum Kuis</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="student-name">Nama Lengkap</label>
+                        <input class="shadow appearance-none border border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" id="student-name" type="text" placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="student-class">Kelas</label>
+                        <select class="shadow appearance-none border border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" id="student-class">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="2A">Kelas 2A</option>
+                            <option value="2B">Kelas 2B</option>
+                            <option value="2C">Kelas 2C</option>
+                        </select>
+                    </div>
+                    <p id="identity-error" class="text-red-500 text-sm font-bold italic mb-4 hidden bg-red-50 p-2 rounded border border-red-200">❌ Mohon isi Nama dan Kelas terlebih dahulu.</p>
+                    <button onclick="submitIdentity()" class="btn-primary w-full text-center text-lg py-3 shadow-lg">Mulai Kuis Sekarang 🚀</button>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="loading-content" class="hidden text-center py-12">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600 mx-auto mb-4"></div>
+                    <p class="text-lg text-blue-800 font-bold animate-pulse" id="loading-text">Menyiapkan soal dari database...</p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quiz-content" class="hidden">
+                    <div id="question-text" class="text-xl font-semibold text-gray-800 mb-2"></div>
+                    <div id="question-context" class="text-sm text-gray-500 mb-6 italic"></div>
+                    
+                    <div id="options-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <div id="quiz-feedback" class="feedback-bubble">
+                        <!-- Feedback injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Score Container (Hidden initially) -->
+                <div id="score-content" class="hidden text-center py-8">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <h3 class="text-3xl font-bold text-blue-900 mb-2">Selesai!</h3>
+                    <p class="text-xl text-gray-700 mb-6">Skor Kamu: <span id="final-score" class="font-extrabold text-blue-600 text-4xl">0</span> / 100</p>
+                    
+                    <div id="score-message" class="mb-8 font-medium text-lg"></div>
+
+                    <button onclick="navTo('sec-home')" class="btn-primary mx-2">
+                        Kembali ke Awal
+                    </button>
+                    <button onclick="startQuiz()" class="btn-primary bg-amber-500 hover:bg-amber-600 mx-2">
+                        Ulangi Kuis
+                    </button>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button id="btn-next-q" onclick="nextQuestion()" class="btn-primary hidden">
+                        Soal Berikutnya ➡️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 text-center text-sm text-gray-500 font-medium border-t border-blue-100 bg-white/30 backdrop-blur-sm">
+        <div class="flex flex-col items-center justify-center gap-2">
+            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-blue-50">
+                <span class="text-xs text-gray-400 uppercase tracking-wider font-bold">Pengembang:</span>
+                <span class="text-blue-800 font-bold brand-font">Miss Tya</span>
+            </div>
+            <p>Modul Pembelajaran Interaktif &copy; 2026 - Kanwil Kemenag Prov. Gorontalo</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Navigation Logic ---
+        function navTo(sectionId) {
+            document.querySelectorAll('.section-container').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Re-initialize specific sections if needed
+            if (sectionId === 'sec-dragdrop') {
+                resetDragDrop();
+            } else if (sectionId === 'sec-quiz') {
+                startQuiz();
+            } else if (sectionId === 'sec-explore') {
+                changePosition('in'); // Reset to default
+            }
+        }
+
+        // --- Section 1: Exploration Logic ---
+        function changePosition(pos) {
+            const item = document.getElementById('scene-item');
+            const feedback = document.getElementById('explore-feedback');
+            
+            // Reset buttons
+            document.querySelectorAll('.btn-pos').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+            });
+            document.getElementById(`btn-${pos}`).classList.add('ring-4', 'ring-blue-400', 'bg-blue-50');
+
+            // Reset classes
+            item.className = 'students-char';
+            
+            // Apply new position and feedback
+            setTimeout(() => {
+                item.classList.add(`pos-${pos}`);
+                feedback.style.display = 'block';
+                
+                if (pos === 'in') {
+                    feedback.innerHTML = "<strong>Hebat!</strong> Murid berada <strong>di dalam</strong> (IN) kotak. Coba bayangkan kamu menaruh pensil <em>in the pencil case</em>.";
+                    feedback.style.borderLeftColor = "#3b82f6"; // blue
+                } else if (pos === 'on') {
+                    feedback.innerHTML = "<strong>Bagus!</strong> Murid berada <strong>di atas</strong> (ON) kotak. Seperti buku yang ada <em>on the table</em>.";
+                    feedback.style.borderLeftColor = "#eab308"; // yellow
+                } else if (pos === 'under') {
+                    feedback.innerHTML = "<strong>Pintar!</strong> Murid berada <strong>di bawah</strong> (UNDER) meja. Sembunyi dari panasnya matahari Gorontalo <em>under the tree</em> (di bawah pohon).";
+                    feedback.style.borderLeftColor = "#22c55e"; // green
+                }
+            }, 50); // slight delay for animation trigger
+        }
+
+        // --- Section 2: Drag and Drop Logic (Touch Supported) ---
+        const words = [
+            { id: 'word-in', text: 'IN', value: 'in' },
+            { id: 'word-on', text: 'ON', value: 'on' },
+            { id: 'word-under', text: 'UNDER', value: 'under' }
+        ];
+
+        let draggedItem = null;
+
+        function resetDragDrop() {
+            const sourceContainer = document.getElementById('drag-source');
+            sourceContainer.innerHTML = '';
+            
+            // Create draggable items
+            words.forEach(w => {
+                const el = document.createElement('div');
+                el.className = 'draggable-item bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-md cursor-grab active:cursor-grabbing';
+                el.textContent = w.text;
+                el.id = w.id;
+                el.dataset.value = w.value;
+                el.draggable = true;
+                
+                // Desktop events
+                el.addEventListener('dragstart', handleDragStart);
+                el.addEventListener('dragend', handleDragEnd);
+                
+                // Touch events for mobile
+                el.addEventListener('touchstart', handleTouchStart, {passive: false});
+                el.addEventListener('touchmove', handleTouchMove, {passive: false});
+                el.addEventListener('touchend', handleTouchEnd);
+
+                sourceContainer.appendChild(el);
+            });
+
+            // Reset drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.innerHTML = '';
+                zone.classList.remove('bg-green-100', 'border-green-500', 'bg-red-100', 'border-red-500');
+                
+                // Desktop events
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragenter', handleDragEnter);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+
+            document.getElementById('dd-feedback').classList.add('hidden');
+            document.getElementById('btn-to-quiz').classList.add('hidden');
+        }
+
+        // Desktop Drag Handlers
+        function handleDragStart(e) {
+            draggedItem = this;
+            setTimeout(() => this.style.opacity = '0.5', 0);
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        function handleDragEnd(e) {
+            this.style.opacity = '1';
+            draggedItem = null;
+        }
+        function handleDragOver(e) {
+            e.preventDefault(); // Necessary to allow dropping
+            return false;
+        }
+        function handleDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('hover');
+        }
+        function handleDragLeave(e) {
+            this.classList.remove('hover');
+        }
+        function handleDrop(e) {
+            e.stopPropagation();
+            this.classList.remove('hover');
+            
+            if (draggedItem) {
+                // If zone already has an item, return it to source
+                if (this.hasChildNodes()) {
+                    document.getElementById('drag-source').appendChild(this.firstChild);
+                }
+                this.appendChild(draggedItem);
+            }
+            return false;
+        }
+
+        // Touch Handlers for Mobile
+        let initialX = 0, initialY = 0;
+        let currentX = 0, currentY = 0;
+        
+        function handleTouchStart(e) {
+            draggedItem = this;
+            initialX = e.touches[0].clientX - currentX;
+            initialY = e.touches[0].clientY - currentY;
+            
+            // Create a clone for visual dragging while original stays hidden
+            this.style.opacity = '0.4';
+        }
+        
+        function handleTouchMove(e) {
+            if (!draggedItem) return;
+            e.preventDefault(); // Prevent scrolling
+            
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+            
+            // Simple visual move (could be improved with a floating clone)
+            // For this simple implementation, we'll just track touch position
+        }
+        
+        function handleTouchEnd(e) {
+            if (!draggedItem) return;
+            draggedItem.style.opacity = '1';
+            
+            // Find drop zone under touch end coordinates
+            const touch = e.changedTouches[0];
+            const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            if (dropTarget && dropTarget.classList.contains('drop-zone')) {
+                if (dropTarget.hasChildNodes()) {
+                    document.getElementById('drag-source').appendChild(dropTarget.firstChild);
+                }
+                dropTarget.appendChild(draggedItem);
+            }
+            
+            currentX = 0; currentY = 0;
+            draggedItem = null;
+        }
+
+        function checkDragDrop() {
+            let correctCount = 0;
+            let allFilled = true;
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                if (zone.children.length === 0) {
+                    allFilled = false;
+                }
+            });
+
+            if (!allFilled) {
+                const fb = document.getElementById('dd-feedback');
+                fb.textContent = "Mohon isi semua kotak yang kosong dulu ya!";
+                fb.className = "text-center font-bold text-lg mt-6 text-amber-600 block";
+                return;
+            }
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const answer = zone.dataset.answer;
+                const child = zone.children[0];
+                const userAnswer = child ? child.dataset.value : null;
+
+                // Reset styles
+                zone.classList.remove('bg-green-100', 'border-green-500', 'bg-red-100', 'border-red-500');
+
+                if (userAnswer === answer) {
+                    correctCount++;
+                    zone.classList.add('bg-green-100', 'border-green-500');
+                } else {
+                    zone.classList.add('bg-red-100', 'border-red-500');
+                }
+            });
+
+            const fb = document.getElementById('dd-feedback');
+            fb.classList.remove('hidden');
+            
+            if (correctCount === 3) {
+                fb.innerHTML = "🎉 Luar Biasa! Semua jawabanmu benar. Mari lanjut ke kuis!";
+                fb.className = "text-center font-bold text-lg mt-6 text-green-600 block";
+                document.getElementById('btn-to-quiz').classList.remove('hidden');
+            } else {
+                fb.innerHTML = `Kamu menjawab ${correctCount} dengan benar. Coba periksa lagi yang berwarna merah.`;
+                fb.className = "text-center font-bold text-lg mt-6 text-amber-600 block";
+            }
+        }
+
+        // --- STREAMING_CHUNK:Section 3: Quiz Logic ---
+        const defaultQuizData = [
+            {
+                q: "Guru meletakkan buku cetak Bahasa Inggris menempel di atas meja guru.",
+                context: "(The book is ... the table)",
+                options: [
+                    { text: "IN", correct: false, feedback: "Kurang tepat. 'In' berarti di dalam. Buku itu menempel di atas permukaan meja." },
+                    { text: "ON", correct: true, feedback: "Tepat sekali! 'On' digunakan untuk benda yang berada di atas dan menempel pada permukaan." },
+                    { text: "UNDER", correct: false, feedback: "Kurang tepat. 'Under' berarti di bawah." }
+                ]
+            },
+            {
+                q: "Cuaca di Gorontalo sedang panas. Aisyah berteduh di bawah pohon rindang.",
+                context: "(Aisyah is ... the tree)",
+                options: [
+                    { text: "ON", correct: false, feedback: "Oh tidak, Aisyah tidak memanjat dan berada di atas daun pohon (On)." },
+                    { text: "IN", correct: false, feedback: "Kurang tepat. Kita tidak menggunakan 'In' (di dalam) untuk pohon dalam konteks berteduh." },
+                    { text: "UNDER", correct: true, feedback: "Benar! 'Under' berarti di bawah. Aisyah berteduh di bawah cabang pohon." }
+                ]
+            },
+            {
+                q: "Ada 5 buah pensil disimpan di dalam tempat pensil milik Budi.",
+                context: "(Five pencils are ... the pencil case)",
+                options: [
+                    { text: "IN", correct: true, feedback: "Hebat! 'In' digunakan karena pensil berada di dalam ruang tertutup (tempat pensil)." },
+                    { text: "ON", correct: false, feedback: "Kurang tepat. Jika 'On', berarti pensilnya ditaruh di luar, di atas tempat pensil." },
+                    { text: "UNDER", correct: false, feedback: "Kurang tepat. Pensilnya tidak disembunyikan di bawah tempat pensil." }
+                ]
+            },
+            {
+                q: "Look at the picture in your mind: Seekor kucing sedang tidur di keranjang tidurnya.",
+                context: "(The cat is sleeping ... the basket)",
+                options: [
+                    { text: "UNDER", correct: false, feedback: "Jika 'Under', kucingnya akan tertindih keranjang." },
+                    { text: "IN", correct: true, feedback: "Betul! Keranjang memiliki ruang ke dalam, jadi kucing tidur 'In' (di dalam) keranjang." },
+                    { text: "ON", correct: false, feedback: "Bisa jadi, tetapi karena keranjang memiliki ruang wadah, 'In' lebih tepat untuk menggambarkan di dalam wadah." }
+                ]
+            },
+            {
+                q: "Pak Guru menjatuhkan kapur tulis, dan kapur itu menggelinding ke bawah kursi.",
+                context: "(The chalk is ... the chair)",
+                options: [
+                    { text: "ON", correct: false, feedback: "Kapur jatuh, jadi tidak mungkin ada di atas kursi (On)." },
+                    { text: "UNDER", correct: true, feedback: "Sempurna! Kapur berada di bawah dudukan kursi, jadi kita gunakan 'Under'." },
+                    { text: "IN", correct: false, feedback: "Kursi bukan wadah tertutup, jadi kita tidak menggunakan 'In'." }
+                ]
+            }
+        ];
+
+        // TAUTAN DATABASE GOOGLE APPS SCRIPT
+        const API_URL = "https://script.google.com/macros/s/AKfycbzZZWY2d1EwL9LU1npqrsrnuaa6CbCRa6OtX2lRmNCDWcKidrWku1t3zWDe0Ey-dHm6/exec";
+        
+        let quizData = [...defaultQuizData];
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+        
+        // Variabel Penyimpanan Data Siswa
+        let studentName = "";
+        let studentClass = "";
+        let startTime = null;
+        let studentAnswersDetail = [];
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        function startQuiz() {
+            currentQ = 0;
+            score = 0;
+            correctCount = 0;
+            incorrectCount = 0;
+            studentAnswersDetail = [];
+            
+            // Tampilkan form identitas sebelum kuis
+            document.getElementById('identity-content').classList.remove('hidden');
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('score-content').classList.add('hidden');
+            document.getElementById('btn-next-q').classList.add('hidden');
+            
+            // Reset form
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-class').value = '';
+            document.getElementById('identity-error').classList.add('hidden');
+        }
+        
+        async function submitIdentity() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim();
+            const errEl = document.getElementById('identity-error');
+            
+            if (!nameInput || !classInput) {
+                errEl.classList.remove('hidden');
+                return;
+            }
+            errEl.classList.add('hidden');
+            
+            studentName = nameInput;
+            studentClass = classInput;
+            startTime = new Date(); // Mulai hitung waktu pengerjaan
+            
+            // Tampilkan layar loading
+            document.getElementById('identity-content').classList.add('hidden');
+            document.getElementById('loading-content').classList.remove('hidden');
+            document.getElementById('loading-text').textContent = "Menyiapkan soal dari database...";
+            
+            try {
+                // Tarik soal dari Google Sheets (Sheet: 'soal')
+                const response = await fetch(API_URL);
+                const result = await response.json();
+                if (result.status === 'success' && result.data && result.data.length > 0) {
+                    quizData = result.data; 
+                } else {
+                    quizData = [...defaultQuizData]; // Fallback
+                }
+            } catch (e) {
+                console.warn("Koneksi gagal atau offline, menggunakan soal bawaan aplikasi.");
+                quizData = [...defaultQuizData]; // Fallback jika offline
+            }
+            
+            document.getElementById('loading-content').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const qData = quizData[currentQ];
+            
+            document.getElementById('quiz-progress').textContent = `Soal ${currentQ + 1}/${quizData.length}`;
+            document.getElementById('question-text').textContent = `${currentQ + 1}. ${qData.q}`;
+            document.getElementById('question-context').textContent = qData.context;
+            
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+            
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'quiz-option';
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(index, btn);
+                optContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('btn-next-q').classList.add('hidden');
+        }
+
+        function selectOption(selectedIndex, btnElement) {
+            if (answered) return; // Prevent multiple clicks
+            answered = true;
+
+            const qData = quizData[currentQ];
+            const isCorrect = qData.options[selectedIndex].correct;
+            const feedbackText = qData.options[selectedIndex].feedback;
+            const selectedText = qData.options[selectedIndex].text;
+            
+            const options = document.querySelectorAll('.quiz-option');
+            
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+                score += (100 / quizData.length); // Skor dihitung otomatis dari jumlah soal
+                correctCount++;
+                studentAnswersDetail.push(`Soal ${currentQ + 1}: ${selectedText} (BENAR)`);
+                showFeedback(feedbackText, 'success');
+            } else {
+                btnElement.classList.add('incorrect');
+                incorrectCount++;
+                studentAnswersDetail.push(`Soal ${currentQ + 1}: ${selectedText} (SALAH)`);
+                // Highlight correct answer
+                qData.options.forEach((opt, idx) => {
+                    if (opt.correct) options[idx].classList.add('correct');
+                });
+                showFeedback(feedbackText, 'error');
+            }
+
+            document.getElementById('btn-next-q').classList.remove('hidden');
+        }
+
+        function showFeedback(text, type) {
+            const fb = document.getElementById('quiz-feedback');
+            fb.innerHTML = text;
+            fb.style.display = 'block';
+            if (type === 'success') {
+                fb.style.backgroundColor = '#dcfce7'; // green bg
+                fb.style.borderLeftColor = '#22c55e';
+            } else {
+                fb.style.backgroundColor = '#fee2e2'; // red bg
+                fb.style.borderLeftColor = '#ef4444';
+            }
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                loadQuestion();
+            } else {
+                saveDataAndShowScore();
+            }
+        }
+
+        function saveDataAndShowScore() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('btn-next-q').classList.add('hidden');
+            
+            // 1. Hitung durasi pengerjaan
+            const endTime = new Date();
+            const durationSeconds = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(durationSeconds / 60);
+            const seconds = durationSeconds % 60;
+            const durationString = `${minutes} menit ${seconds} detik`;
+            
+            // 2. Format Data yang akan disetor ke Spreadsheet
+            const postData = {
+                nama: studentName,
+                kelas: studentClass,
+                durasi: durationString,
+                jumlahBenar: correctCount,
+                jumlahSalah: incorrectCount,
+                skor: Math.round(score),
+                detailJawaban: studentAnswersDetail.join(" | ")
+            };
+            
+            // 3. Tampilkan layar loading saat mengirim data
+            document.getElementById('loading-content').classList.remove('hidden');
+            document.getElementById('loading-text').textContent = "Menyimpan hasil pengerjaanmu ke lembar nilai Guru...";
+            
+            // 4. Kirim Data menggunakan Fetch (POST)
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(postData),
+                headers: {
+                    // text/plain wajib digunakan agar tidak memicu pemblokiran CORS dari Apps Script
+                    "Content-Type": "text/plain;charset=utf-8", 
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Status Penyimpanan:", data.message);
+            })
+            .catch(err => {
+                console.error("Catatan: Terjadi kendala internet, skor tetap ditampilkan", err);
+            })
+            .finally(() => {
+                // Selalu tampilkan skor apapun hasil jaringan internet (online/offline)
+                document.getElementById('loading-content').classList.add('hidden');
+                showFinalScore();
+            });
+        }
+
+        function showFinalScore() {
+            document.getElementById('score-content').classList.remove('hidden');
+            
+            const scoreEl = document.getElementById('final-score');
+            const msgEl = document.getElementById('score-message');
+            
+            // Animate score counting
+            let currentDisplay = 0;
+            let finalRoundedScore = Math.round(score);
+            const timer = setInterval(() => {
+                currentDisplay += 5;
+                if (currentDisplay >= finalRoundedScore) {
+                    currentDisplay = finalRoundedScore;
+                    clearInterval(timer);
+                    
+                    // Display message based on score & sebut nama siswanya
+                    if (finalRoundedScore === 100) {
+                        msgEl.innerHTML = `Luar Biasa, ${studentName}! <br>Kamu memahami preposisi In, On, Under dengan sempurna!`;
+                        msgEl.className = "mb-8 font-bold text-xl text-green-600";
+                    } else if (finalRoundedScore >= 60) {
+                        msgEl.innerHTML = `Bagus Sekali, ${studentName}! <br>Kamu sudah cukup paham, terus berlatih ya!`;
+                        msgEl.className = "mb-8 font-bold text-xl text-blue-600";
+                    } else {
+                        msgEl.innerHTML = `Tetap Semangat, ${studentName}! <br>Mari kita ulangi materinya lagi agar lebih paham.`;
+                        msgEl.className = "mb-8 font-bold text-xl text-amber-600";
+                    }
+                }
+                scoreEl.textContent = currentDisplay;
+            }, 50);
+        }
+
+        // Initialize first section on load
+        window.onload = () => {
+            navTo('sec-home');
+        };
+
+    </script>
+</body>
+</html>
